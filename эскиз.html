@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЭКСТРЕННЫЙ ДОСТУП</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', 'Helvetica', sans-serif; /* Шрифты с поддержкой кириллицы */
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #00f3ff;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(10, 5, 30, 0.85);
+            border: 2px solid #00f3ff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .container::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, transparent 20%, rgba(0, 243, 255, 0.1) 25%, transparent 30%);
+            animation: pulse 6s infinite linear;
+            z-index: -1;
+        }
+        
+        @keyframes pulse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(0, 243, 255, 0.7);
+            position: relative;
+            display: inline-block;
+            font-weight: bold; /* Улучшение читаемости */
+        }
+        
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00f3ff, transparent);
+            border-radius: 50%;
+        }
+        
+        .subtitle {
+            color: #ff00ea;
+            font-size: 1.2rem;
+            text-shadow: 0 0 10px rgba(255, 0, 234, 0.5);
+        }
+        
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .btn {
+            background: rgba(20, 10, 40, 0.9);
+            border: 2px solid;
+            border-radius: 12px;
+            color: white;
+            padding: 20px 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px currentColor;
+        }
+        
+        .btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+        
+        .btn-1 { border-color: #00f3ff; color: #00f3ff; }
+        .btn-2 { border-color: #ff00ea; color: #ff00ea; }
+        .btn-3 { border-color: #00ff87; color: #00ff87; }
+        .btn-4 { border-color: #ff9500; color: #ff9500; }
+        .btn-5 { border-color: #cf00ff; color: #cf00ff; }
+        .btn-6 { border-color: #ff003c; color: #ff003c; }
+        
+        .terminal {
+            background: rgba(0, 5, 15, 0.7);
+            border: 1px solid #00f3ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            min-height: 150px;
+            font-family: 'Courier New', Courier, monospace; /* Шрифт терминала с кириллицей */
+            overflow-y: auto;
+            max-height: 300px;
+            box-shadow: inset 0 0 20px rgba(0, 243, 255, 0.2);
+        }
+        
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .terminal-title {
+            font-size: 1.1rem;
+            color: #00ff87;
+            margin-left: 10px;
+            text-shadow: 0 0 8px rgba(0, 255, 135, 0.4);
+        }
+        
+        .terminal-content {
+            color: #e0e0ff;
+            line-height: 1.6;
+            font-family: 'Courier New', Courier, monospace; /* Фикс для текста терминала */
+        }
+        
+        .blink {
+            animation: blink 1s infinite;
+            display: inline-block;
+            width: 8px;
+            height: 1.2rem;
+            background: #00f3ff;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background: rgba(0, 10, 30, 0.6);
+            border-radius: 8px;
+            border: 1px solid #00f3ff;
+            font-size: 0.9rem;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            box-shadow: 0 0 8px currentColor;
+        }
+        
+        .indicator-1 { background: #00ff87; }
+        .indicator-2 { background: #ff00ea; }
+        .indicator-3 { background: #ff9500; }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: rgba(0, 243, 255, 0.7);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(0, 243, 255, 0.3);
+            padding-top: 20px;
+        }
+        
+        @media (max-width: 600px) {
+            .buttons-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>КРИТИЧЕСКИЙ ИНТЕРФЕЙС</h1>
+            <p class="subtitle">Активируйте системы для спасения</p>
+        </header>
+        
+        <div class="buttons-grid">
+            <button class="btn btn-1">Энергия</button>
+            <button class="btn btn-2">Связь</button>
+            <button class="btn btn-3">Медицина</button>
+            <button class="btn btn-4">Безопасность</button>
+            <button class="btn btn-5">Данные</button>
+            <button class="btn btn-6">Эвакуация</button>
+        </div>
+        
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="status-indicator indicator-1"></div>
+                <div class="terminal-title">ТЕРМИНАЛ КОМАНД</div>
+            </div>
+            <div class="terminal-content">
+                > Система инициализирована<br>
+                > Готов к приёму инструкций<span class="blink"></span>
+            </div>
+        </div>
+        
+        <div class="status-bar">
+            <div class="status-item">
+                <div class="status-indicator indicator-1"></div>
+                <span>Сеть: Активна</span>
+            </div>
+            <div class="status-item">
+                <div class="status-indicator indicator-2"></div>
+                <span>Защита: 92%</span>
+            </div>
+            <div class="status-item">
+                <div class="status-indicator indicator-3"></div>
+                <span>Питание: Критично</span>
+            </div>
+        </div>
+        
+        <footer>
+            Статус: ШИФРОВКА АКТИВНА | v 1.7.5
+        </footer>
+    </div>
+
+    <script>
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const btnClass = this.classList[1];
+                const terminal = document.querySelector('.terminal-content');
+                
+                // Эффект нажатия
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+                
+                // Генерация ответа
+                const responses = {
+                    'btn-1': '> Активация резервных источников... Уровень энергии: +47%',
+                    'btn-2': '> Установка защищённого канала... Частота 5.8Ghz | Шифрование: AES-256',
+                    'btn-3': '> Запуск протокола MEDEVAC... Координаты переданы спасотряду',
+                    'btn-4': '> Активация режима "Цитадель"... Все точки доступа защищены',
+                    'btn-5': '> Дешифровка данных... Доступ к архивам 1-7 уровня открыт',
+                    'btn-6': '> ЭВАКУАЦИЯ: Маршрут Delta доступен. Время до прибытия: 17 мин'
+                };
+                
+                // Создаём эффект печати
+                const responseText = responses[btnClass];
+                terminal.innerHTML = '> ';
+                let i = 0;
+                
+                const typeWriter = () => {
+                    if (i < responseText.length) {
+                        terminal.innerHTML += responseText.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 30);
+                    } else {
+                        terminal.innerHTML += '<span class="blink"></span>';
+                    }
+                };
+                
+                typeWriter();
+                
+                // Визуальные эффекты
+                this.style.boxShadow = `0 0 30px ${this.style.color}`;
+                setTimeout(() => {
+                    this.style.boxShadow = '0 0 15px rgba(0, 0, 0, 0.5)';
+                }, 1000);
+            });
+        });
+        
+        // Динамическое мерцание элементов
+        setInterval(() => {
+            document.querySelectorAll('.status-indicator').forEach(indicator => {
+                indicator.style.opacity = Math.random() > 0.3 ? '1' : '0.3';
+            });
+        }, 800);
+    </script>
+</body>
+</html>
